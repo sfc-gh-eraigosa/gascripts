@@ -18,6 +18,6 @@
 <UserPref name="debug" display_name="Display debug information (any value will do to turn this on)." 
           datatype="bool" required="false"/>
 
-  <Content type="url" href="http://google.gorillagear.com/pages/listwithicons.html">
+  <Content type="url" href="https://xpandesiceng-depo.googlecode.com/svn/trunk/gadgets/pages/imglistview.html">
   </Content>
   </Module>​

@@ -1,0 +1,1 @@
+Hosting for various google gadget script xml , js scripts needed for google gadgets.

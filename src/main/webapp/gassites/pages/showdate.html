@@ -1,16 +1,16 @@
-<!DOCTYPE html> 
-<html> 
-	<head> 
-	<title>List View</title> 
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>List View</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="//code.jquery.com/jquery-1.6.4.min.js"></script>
 
-</head> 
-<body> 
+</head>
+<body>
 <div id="content"></div>
 <div id="error"></div>
-<div id='debug' class="debug"></div> 
-	
+<div id='debug' class="debug"></div>
+
 
 <script type="text/javascript">
 // using http://keith-wood.name/datetimeEntry.html
@@ -21,24 +21,24 @@
 	var month = (m < 10) ? '0' + m : m;
 	var yy = date.getYear();
 	var year = (yy < 1000) ? yy + 1900 : yy;
-	
+
 	var month_name = new Array("January", "February", "March",
 "April", "May", "June", "July", "August", "September",
 "October", "November", "December");
 
-	
-	$(document).ready(function(){  
+
+	$(document).ready(function(){
 			var thedate = $('<div id="date">' + month_name[m - 1] + ' ' + day + ', ' + year + '</div>');
 			thedate.appendTo('div#content');
-			
-			
-			
-	}); 
-		
-	
-	
+
+
+
+	});
+
+
+
 </script>
-	
+
 
 </body>
 </html>

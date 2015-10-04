@@ -1,0 +1,20 @@
+#!/bin/bash
+
+WORKSPACE_ROOT="$(git rev-parse --show-toplevel)"
+APP_NAME=$1
+API_VERSION=$2
+if [ -z "$APP_NAME" ] || [ -z "$API_VERSION" ] ; then
+    echo "ERROR usage push <appname> <api version: 1.0>"
+    exit 1
+fi
+#TODO: lookup right way to create long lived token
+#if [ ! -f "${WORKSPACE_ROOT}/.appengine.key" ] ; then
+#    echo "WARNING: you will be prompted for login key, if ${WORKSPACE_ROOT}/.appengine.key does not exist"
+#fi
+# docker run -it --rm -v "$(git rev-parse --show-toplevel)":/apps/workspace appengine bash -c "set -x -v && ls -altr /apps/workspace/target && cat /apps/workspace/.appengine.key|appcfg.sh --passin -A ${APP_NAME} update /apps/workspace/target/${APP_NAME}-${API_VERSION}"
+docker run \
+  -it \
+  --rm \
+  -v "$(git rev-parse --show-toplevel)":/apps/workspace \
+  appengine \
+  bash -c "appcfg.sh --passin -A ${APP_NAME} update /apps/workspace/target/${APP_NAME}-${API_VERSION}"

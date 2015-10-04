@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <Module>
+  
+  <ModulePrefs title="Simple Show Date"
+             description="Very Simply Display a date string."
+             author="Raigosa.com Software Development Independent Contracting Services"
+             author_affiliation=""
+             author_email="xpandesiceng@yahoo.com"
+             screenshot="/ig/modules/none-tbd.png"
+             thumbnail="/ig/modules/none-tbd-thm.png" > 
+<Require feature="idi"/>
+<Require feature="locked-domain" />
+</ModulePrefs>
+<UserPref name="fontfam" display_name="Font Family." 
+          default_value="Arial" required="false" datatype="enum">
+          	<EnumValue value="Times New Roman" display_value="Times New Roman"/>
+			<EnumValue value="Arial" display_value="Arial"/>
+			<EnumValue value="Georgia" display_value="Georgia"/>
+</UserPref>
+<UserPref name="fontbgcolor" display_name="Font Back Ground Color." 
+          default_value="#FFFFFF" required="false"/>
+<UserPref name="fontcolor" display_name="Font Color." 
+          default_value="#000000" required="false"/>   
+<UserPref name="fontsize" 
+          display_name="Font Size" 
+          default_value="Big" datatype="enum" required="false">
+<EnumValue value="4px" display_value="Tiny"/>
+<EnumValue value="9px" display_value="Small"/>
+<EnumValue value="10px" display_value="Regular"/>
+<EnumValue value="12px" display_value="Big"/>
+<EnumValue value="16px" display_value="Large"/>
+<EnumValue value="18px" display_value="x-Large"/>
+</UserPref>
+
+<UserPref name="showerrors" display_name="Display an error message when there are problems." 
+          datatype="bool" required="false"/>              
+<UserPref name="debug" display_name="Display debug information (any value will do to turn this on)." 
+          datatype="bool" required="false"/>
+<Content type="html">
+<![CDATA[
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<div id="content"></div>
+<div id="error"></div>
+<div id='debug' class="debug"></div> 
+	
+
+<script type="text/javascript">
+	var prefs = new _IG_Prefs(); // User preferences 
+    var date = new Date();
+	var d  = date.getDate();
+	var day = (d < 10) ? '0' + d : d;
+	var m = date.getMonth() + 1;
+	var month = (m < 10) ? '0' + m : m;
+	var yy = date.getYear();
+	var year = (yy < 1000) ? yy + 1900 : yy;
+	
+	var month_name = new Array("January", "February", "March",
+"April", "May", "June", "July", "August", "September",
+"October", "November", "December");
+
+	
+	
+	$(document).ready(function(){  
+			//var thedate = $('<div id="date">' + month + '/' + day + '/' + year + '</div>');
+			var thedate = $('<div id="date">' + month_name[m - 1] + ' ' + day + ', ' + year + '</div>');
+			
+			thedate.css("background-color", function()
+						{
+							return prefs.getString("fontbgcolor");
+						});
+						
+			thedate.css("font-family", function()
+						{
+							return prefs.getString("fontfam");
+						});
+			thedate.css("color", function()
+						{
+							return prefs.getString("fontcolor");
+						});
+			thedate.css("font-size", function()
+						{
+							return prefs.getString("fontsize");
+						});
+									
+			thedate.appendTo('div#content');
+			
+			
+			
+	}); 
+	
+</script>
+	
+]]>
+  </Content>
+ </Module>

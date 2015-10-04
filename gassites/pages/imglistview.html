@@ -1,0 +1,54 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>List View</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+	<link href="../js/includes/jquery.mobile-1.0.1/jquery.mobile-1.0.1.min.css" rel="stylesheet" type="text/css" media="screen" /> 
+	
+	<script type="text/javascript" src="../js/includes/JSON-js/json2.js"></script>
+	<script type="text/javascript" src="../js/includes/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="../js/includes/jquery.mobile-1.0.1/jquery.mobile-1.0.1.min.js"></script>
+	
+	<script src="../js/google-spreadsheet.js"></script>
+	<script src="../js/imglistview.js"></script>
+	
+	
+	
+</head> 
+<body> 
+
+<div data-role="page" data-theme="d" id="main">
+
+	<div data-theme="b" id="header">
+	</div><!-- /header -->
+    <div data-role="content">	
+		<ul data-role="listview" data-theme="d" data-inseet="true" id="imglist">
+			
+			
+		</ul>	
+	
+	</div>
+	<!-- /content -->
+	<div  data-theme="b" id="footer" >
+	</div><!-- /header -->
+
+<div id="error"></div>
+<div id='debug' class="debug"></div> 
+</div><!-- /page -->	
+<script type="text/javascript">
+  
+    		var debuglocal = false;
+			$(document).ready(function(){ 
+					$("#imglist").loadImgListView();
+      				
+      				//$.mobile.changePage($('#main'));
+   	     	});  
+      
+    
+    
+    
+</script>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Table View</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+	<style type="text/css" media="screen">
+	 	
+		.listheader {
+			margin-left:43px;
+			white-space:normal;
+			text-align:left;
+		}
+		.description {
+			margin-left:43px;
+			font-size:9px;
+			white-space:normal;
+			text-align:left;
+		}
+		.ilcontainer {
+			text-align:center;
+		}
+	</style>
+	<link href="../js/includes/jquery.mobile-1.0.1/jquery.mobile-1.0.1.min.css" rel="stylesheet" type="text/css" media="screen" /> 
+	
+	<script type="text/javascript" src="../js/includes/JSON-js/json2.js"></script>
+	<script type="text/javascript" src="../js/includes/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="../js/includes/jquery-tmpl/jquery.tmpl.js"></script> 
+    <script type="text/javascript" src="../js/includes/jquery.mobile-1.0.1/jquery.mobile-1.0.1.min.js"></script>
+	
+	<script type="text/javascript" src="../js/google-spreadsheet.js"></script>
+	
+	
+
+	<script type="text/javascript" src="../js/khfimglistview.js"></script>
+	
+	
+</head> 
+<body> 
+
+<div data-role="page" data-theme="d" id="main">
+
+	<div data-theme="b" id="header">	</div><!-- /header -->
+    <div data-role="content" id="content">
+    	<div id="contentload" style="overflow: auto;">
+		<img src="http://www.google.com/ig/images/spinner.gif" />
+		</div>
+    	<ul data-divider-theme="a" data-role="listview" data-inseet="true" id="tableview">
+			
+			
+		</ul>	
+	
+    	
+	</div>
+	<!-- /content -->
+	<div  data-theme="b" id="footer" >
+		<div id="error"></div>
+		<div id='debug'></debug>
+	</div><!-- /header -->
+
+</div><!-- /page -->	
+
+<script id="contentTemplate" type="text/x-jquery-tmpl">
+	
+	
+	{{each(index) Header}}
+	
+	
+	
+	<li data-icon="false">
+		<a target="_top" href="${Link_URL[index]}">
+			<div class="iconsmall" >
+			{{if Link_URL[index] != '' }}
+				<p ><img  src="${Image_URL[index]}" class="ui-li-icon"></p>
+			{{/if}}
+			</div>
+			<div class="ilcontainer">
+			<p class="listheader" id="listheader" ><strong>${Header[index]}</strong></p>
+			<p class="description" id="description" >${Description[index]}</p>
+			</div>
+		</a></li>
+	
+	{{/each}}
+	
+		
+    	
+</script>
+
+<div id="pageData"></div>
+
+<script type="text/javascript">
+  
+ 			var oTable = null;
+    		var debuglocal = false;
+    		    
+    		    $('#tableview').TableView($('#contentTemplate'),function()
+	    		{
+	    			oTable = this;
+	    			$(document).ready(function(){ 
+		    			oTable = oTable.init($('div#pageData'),
+			    			function(){
+			    				// call when we have data
+			    				oTable.loadContent();
+			    				updateStyles();
+								
+			    			},
+			    			function()
+			    			{
+			    				console.log('setting footer header fired');
+			    				oTable.setFooterHeader();
+			    				$('#tableview').listview('refresh');
+			    			},
+			    			function(oerr){
+			    				// call when we have errors
+			    				$('<li>'+ oerr +'</li>').appendTo('#tableview');
+			    				
+								$('#tableview').listview('refresh');
+								
+
+
+			    				
+								
+			    			});
+		    			
+		    			
+		    				
+							
+      				});  
+	    		});
+			
+      		function updateStyles()
+      		{
+      			var sTableView = '#tableview';
+      			$(sTableView).listview('refresh');
+				$('#contentload').remove();
+				
+				var tableCSS = {
+									'margin-left':'43px',
+									'white-space':'normal',
+									'text-align':'left'
+							    };
+				
+				$(sTableView).find("#listheader").each(function(){
+    		      	$(this).css(tableCSS);
+    		  	});
+    		  	
+				$(sTableView).find("#description").each(function(){
+    		      	$(this).css(tableCSS);
+    		  	});
+				var fontCSS = {
+									'font-size':'11px'
+							    };
+				
+				$(sTableView).find("#description").each(function(){
+    		      	$(this).css(fontCSS);
+    		  	});
+				
+				
+      		}
+    
+    
+</script>
+
+</body>
+</html>

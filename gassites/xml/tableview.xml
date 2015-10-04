@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <Module>
+  
+  <ModulePrefs title="Table List View"
+             description="Displays an icon on left side of a list item in a Google Spreadsheet Document, currently displays custom output.  Doesn't handle dynamic worksheet."
+             author="Raigosa.com Software Development Independent Contracting Services"
+             author_affiliation=""
+             author_email="xpandesiceng@yahoo.com" 
+              
+             screenshot="/ig/modules/none-tbd.png"
+             thumbnail="/ig/modules/none-tbd-thm.png" height="250" > 
+           <Require feature="dynamic-height"/>
+           <Require feature="setprefs"/>
+           <!--
+			<Require feature="idi"/>
+			<Require feature="locked-domain" />
+			-->
+  </ModulePrefs>
+  <UserPref name="spKey" display_name="Google Spreadsheet Key" 
+          required="true"/>
+  <UserPref name="worksheetName" display_name="Worksheet Name" 
+          default_value="List" required="true"/>    
+  <UserPref name="itemsPerPage" display_name="Items Per Page" 
+          default_value="5" required="false"/>              
+  <UserPref name="showerrors" display_name="Show Errors" 
+          datatype="bool" required="false"/>              
+  <UserPref name="debug" display_name="Debug" 
+          datatype="bool" required="false"/>
+  <Content type="html" view="configuration">
+        <![CDATA[
+        	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  			<style type="text/css"> 
+				.config-options { margin: 10px; } 
+				.label { font-weight: bold; width: 35%; vertical-align: top; } 
+				.gray { color:#666666; } 
+				html { font-family:arial,sans-serif; font-size:0.81
+			]]>
+			<![CDATA[
+			     em; font-size-adjust:none; font-style:normal; font-variant:normal; font-weight:normal; line-height:1.5; } 
+			     A:link, A:visited, A:active { text-decoration: none } 
+			 </style> 
+			 <table class="config-options"> 
+			 <tr> 	
+				<td align="left" class="label">Google Spreadsheet Key:</td> 
+					<td align="left"> 
+						<input type="text" id="spKey" onchange="Update()"/> 
+						<br/> <span class="gray">Example: t8IQPRWNHlA4jvJQe5ezi9g<br/>
+						You can get this from google spreadhseet for this gadget in the Dashboard.</span> 
+				</td> 
+			</tr> 
+			 <tr> 	
+				<td align="left" class="label">Worksheet Name:</td> 
+					<td align="left"> 
+						<input type="text" id="worksheetName" onchange="Update()" value="List"/> 
+						<br/> <span class="gray">Specify the name of the worksheet from Google Spreadsheet.</span> 
+				</td> 
+			</tr> 
+			 <tr> 	
+				<td align="left" class="label">Items Per Page:</td> 
+					<td align="left"> 
+						<input type="text" id="itemsPerPage" onchange="Update()" value="5"/> 
+						<br/> <span class="gray">Specify the number of items on each page.</span> 
+				</td> 
+			</tr> 
+			 <tr> 
+			 	<td align="left" class="label">Trouble Shooting:</td> 
+			 	<td align="left"> 
+					 <table> 
+					 <tbody>
+					 	<tr> <td><input type="checkbox" onclick="Update()" id="debug" /> Turn on Debug</td> 
+					 	     <td><input type="checkbox" onclick="Update()" id="showerrors" /> Show Errors</td> 
+					 	</tr>
+					 	
+			 	     </tbody> 
+			 	     </table> 
+			 	 </td> </tr> 
+			
+			
+			</table> 
+			<div id="error"></div>
+			<script type="text/javascript"> 
+				var prefs = new gadgets.Prefs(); 
+				
+				
+				function Update() { 
+						 var spKey = document.getElementById('spKey').value;
+						 var worksheetName = document.getElementById('worksheetName').value;
+						 var itemsPerPage = document.getElementById('itemsPerPage').value;
+						 
+						 if (isNumeric(itemsPerPage) != true)
+						 	logerror('Items Per Page must be a number');
+						 	
+						 itemsPerPage = Number(itemsPerPage);
+						 
+						 if (itemsPerPage <= 1 )
+						 		logerror('Items Per Page must be a number greater than 1');
+						 
+						 var debug = $('#' + 'debug').is(":checked") ? 'on' : 'off';
+						 var showerrors =  $('#' + 'showerrors').is(":checked") ? 'on' : 'off';
+						 
+						 $("div#error").empty().hide();
+						 $("div#error").css('border','0px');
+						 
+						 if(spKey == '')
+						 	logerror('Please specify spreadsheet key');
+						 
+						 if(worksheetName == '')
+						 	logerror('Please a worksheet name');
+						 
+						 
+						 prefs.set('debug', debug); 
+						 prefs.set('showerrors', showerrors); 
+						 
+						 prefs.set('spKey', spKey); 
+						 prefs.set('worksheetName', worksheetName); 
+						 prefs.set('itemsPerPage', itemsPerPage); 
+						
+						 gadgets.window.adjustHeight(); 
+					}; 
+				
+				function Initialize() { 
+					
+					var spKey = '__UP_spKey__'; 
+					if (spKey.length > 0) { document.getElementById('spKey').value = spKey; } 
+					
+					var worksheetName = '__UP_worksheetName__'; 
+					if (worksheetName.length > 0) { document.getElementById('worksheetName').value = worksheetName; } 
+					
+					var itemsPerPage = '__UP_itemsPerPage__'; 
+					if (itemsPerPage.length > 0) { document.getElementById('itemsPerPage').value = Number(itemsPerPage); } 
+					
+					
+					var debug = '__UP_debug__'; 
+					if (debug.length > 0) { document.getElementById('debug').value = debug; } 
+					
+					var showerrors = '__UP_showerrors__'; 
+					if (showerrors.length > 0) { document.getElementById('showerrors').value = showerrors; } 
+					
+					$('#debug').prop('checked', (prefs.getString("debug").toLowerCase() == 'on'));
+					$('#showerrors').prop('checked', (prefs.getString("showerrors").toLowerCase() == 'on'));
+					
+					Update(); 
+				} 
+				function logerror(msg)
+			    {
+			          var cssErrorObj = {
+						      'background-color' : '#FFBABA',
+						      'background-image' : getProtocol() + '//gascripts.appspot.com/gassites/images/error_button_2.png',
+						      'background-size'  : '60px 60px',
+						      'color' : '#D8000C',
+						      'border' : '1px solid',
+						      'margin' : '10px 0px',
+						      'padding': '15px 10px 15px 50px',
+						      'background-color' : 'no-repeat',
+						      'background-position' : '10px center',
+						      'text-align' : 'left'
+						    };
+			    
+			          msg =  msg + "<BR>";
+			          $("div#error").css(cssErrorObj);
+			          $("div#error").append(msg);
+			          $("div#error").show();
+			     }
+			     function isNumeric(value) {
+					  if (value == null || !value.toString().match(/^[-]?\d*\.?\d*$/)) return false;
+					  return true;
+				}
+				  /*
+			       * get http protocol to use
+			       */
+			      function getProtocol()
+			      {
+			    	 var httpPrefix = "";
+	 
+					  try
+					  {
+				    	 if(typeof(document.location.protocol) != 'undefined')
+				    	 		httpPrefix = document.location.protocol; 
+					  }catch(error)
+				      {
+					    	 try
+					    	 {
+						    	 if(typeof(parent.location.protocol) != 'undefined')
+							    	    	httpPrefix = parent.location.protocol; 
+					    	 }
+					    	 catch(error)
+					    	 {
+					    	 	httpPrefix = "";
+					    	 }
+					    	 
+				       }
+					 
+					 		
+					   httpPrefix = (httpPrefix.indexOf("http") < 0) ? "http:" : httpPrefix; // don't allow anything not expected to be set.
+					    
+					   return httpPrefix;
+			      }
+				gadgets.util.registerOnLoadHandler(Initialize);
+			</script>
+			]]>
+  </Content>
+  
+  <Content type="html" view="home">
+			<![CDATA[
+			<iframe id="home" frameborder="0" marginwidth="0" marginheight="0" border="0" style="border:0;margin:0;width:100%;height:100%;" scrolling="no" allowtransparency="true">
+			</iframe> 
+			<script type="text/javascript"> 
+				var prefs = new gadgets.Prefs(); 
+				function Initialize() {
+					 var url = getProtocol() + '//gascripts.appspot.com/gassites/pages/tableview.html?rsz=large&' + 'debug=DEBUGOPT&showerrors=SHOWERRORSOPT&spKey=SPKEYOPT&worksheetName=WSHEETOPT&itemsPerPage=ITEMPPAGEOPT'; 
+					 var iframe = document.getElementById('home'); 
+					 url = url.replace(/DEBUGOPT/, '__UP_debug__'); 
+					 url = url.replace(/SHOWERRORSOPT/, '__UP_showerrors__'); 
+					 url = url.replace(/SPKEYOPT/, '__UP_spKey__'); 
+					 url = url.replace(/WSHEETOPT/, '__UP_worksheetName__'); 
+					 url = url.replace(/ITEMPPAGEOPT/, '__UP_itemsPerPage__'); 
+					 iframe.src = url;
+					 
+					} 
+				  /*
+			       * get http protocol to use
+			       */
+			      function getProtocol()
+			      {
+			    	  var httpPrefix = "";
+	 
+					  try
+					  {
+				    	 if(typeof(document.location.protocol) != 'undefined')
+				    	 		httpPrefix = document.location.protocol; 
+					  }catch(error)
+				      {
+					    	 try
+					    	 {
+						    	 if(typeof(parent.location.protocol) != 'undefined')
+							    	    	httpPrefix = parent.location.protocol; 
+					    	 }
+					    	 catch(error)
+					    	 {
+					    	 	httpPrefix = "";
+					    	 }
+					    	 
+				       }
+					 
+					 		
+					   httpPrefix = (httpPrefix.indexOf("http") < 0) ? "http:" : httpPrefix; // don't allow anything not expected to be set.
+					    
+					   return httpPrefix;
+			      }
+				gadgets.util.registerOnLoadHandler(Initialize); 
+			</script>
+			]]>
+	</Content>
+  
+</Module>

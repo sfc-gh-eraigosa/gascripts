@@ -1,0 +1,184 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Table View</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+	
+	<link href="../js/includes/jquery.mobile-1.0.1/jquery.mobile-1.0.1.min.css" rel="stylesheet" type="text/css" media="screen" /> 
+	
+	<script type="text/javascript" src="../js/includes/JSON-js/json2.js"></script>
+	<script type="text/javascript" src="../js/includes/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="../js/includes/jquery.tinysort.1.3.20/scripts/jquery.tinysort.js"></script>
+	<script type="text/javascript" src="../js/includes/jquery-tmpl/jquery.tmpl.js"></script> 
+    <script type="text/javascript" src="../js/includes/jquery.mobile-1.0.1/jquery.mobile-1.0.1.min.js"></script>
+    
+   
+	<script type="text/javascript" src="../js/google-spreadsheet.js"></script>
+	<style type="text/css" media="screen">
+	 	/*
+		* tableview css 
+		*
+		*/
+		.tvheader {
+		  vertical-align:middle;
+		  font-size:12px;
+		  font-weight:bold;
+		  
+		}
+		.tvheadercenter {
+		  vertical-align:top;
+		  font-size:12px;
+		  font-weight:bold;
+		  text-align:center;
+		}
+		.tvheaderstate {
+		  vertical-align:middle;
+		  font-size:12px;
+		  font-weight:bold;
+		  margin-left:10px;
+		}
+		
+		.col_a{
+			color:#005596;
+			margin-left:13px;
+			margin-right:1px;
+			white-space:normal; /* causes the text to wrap */
+		}
+		.col_b{
+			margin-left:20px;
+		}
+		.col_c{
+			margin-left:20px;
+			white-space:normal;
+		
+		}
+		.col_d{
+			margin-left:20px;
+			white-space:normal;
+		}
+		
+		.iconmed {
+				width:43px;
+			}
+	</style>
+	<script type="text/javascript" src="../js/tableview.js"></script>
+	
+	
+</head> 
+<body> 
+
+<div data-role="page" data-theme="d" id="main">
+
+	<div data-theme="b" id="header">	</div><!-- /header -->
+    <div data-role="content" id="content">
+    
+			<ul data-divider-theme="a" data-role="listview" data-inseet="true" id="header">
+				<div data-role="navbar" data-iconpos="right" style="background-color:#000000;height:50px;">
+					<ul>
+						<li style="width:90px;"></li>
+					    <li><a id="header_a" href="#" alt="Our Most Recent Supporter" data-role="button" data-mini="true" data-theme="a" data-icon="arrow-d" inline="true" data-iconpos="right">Supporter / Site</a></li>
+						<li><a id="header_b" href="#" data-role="button"  data-mini="true" data-theme="a" data-icon="arrow-d" inline="true" data-iconpos="right">City, State</a></li>
+						<li><a id="header_c" href="#" data-role="button"  data-mini="true" data-theme="a" data-icon="arrow-d" inline="true" data-iconpos="right">Phone Number</a></li>
+						<li><a id="header_d" href="#" data-role="button"  data-mini="true" data-theme="a" data-icon="arrow-d" inline="true" data-iconpos="right">Contribution</a></li>
+					</ul>
+				</div>
+			</ul>	
+	    	<ul data-divider-theme="a" data-role="listview" data-inseet="true" id="tableview">
+			</ul>	
+		
+			
+    	
+	</div><!-- /content -->	
+	
+	<div  data-theme="b" id="footer" >
+		<div id="contentload" style="text-align:left;vertical-align:middle;overflow: auto;height:40px;">
+			<img src="../images/spinner.gif" />
+		</div>
+		<ul data-divider-theme="a" data-role="listview" data-inseet="true" id="footernav">
+				<div data-role="navbar" data-inline="true" data-iconpos="left" style="background-color:#000000">
+					<ul>
+						<li style="width:90px;"></li>
+					    <li><a id="previous" href="#" data-role="button" data-mini="true" data-theme="a" data-icon="arrow-l" data-inline="true" >Previous</a></li>
+						<li><a id="next"     href="#" data-role="button" data-mini="true" data-theme="a" data-icon="arrow-r" data-inline="true" data-iconpos="right">Next</a></li>
+						<li></li>
+						<li><a id="pagenumber" href="#" data-role="button" data-mini="true" data-theme="a"></a></li>
+					</ul>
+				</div> 
+			</ul>	
+		<div id="error"></div>
+		<div id='debug'></debug>
+	</div><!-- /footer -->
+
+</div><!-- /page -->	
+
+<script id="contentTemplate" type="text/x-jquery-tmpl">
+		
+		{{each(index) Header}}
+				<li class="ui-grid-d" data-icon="false" id="li${index}">
+					<a target="_blank" href="${Link_URL[index]}">
+					<div class="ui-block-a" style="margin-left:10px;vertical-align:middle;width:70px;height:65px" id="image${index}">
+						{{if Image_URL[index] != '' }}
+							<p class="iconsmall"><img src="${Image_URL[index]}" class="ui-li-thumb"/></p>
+						{{/if}}
+					</div>
+					<div class="ui-block-b" id="comp${index}" >
+						
+						<p class="col_a" id="col_a"><strong >${Header[index]}</strong></p>
+						
+					</div>
+					{{if City[index] != '' }}
+					<div class="ui-block-c" id="citystate${index}" ><p class="col_b" id="col_b">${City[index]}, ${State[index]}</p></div>
+					{{else}}
+					<div class="ui-block-c" id="citystate${index}" ><p class="col_b" id="col_b">${State[index]}</p></div>
+					{{/if}}
+					<div class="ui-block-d" id="phone${index}"><p class="col_c" id="col_c">${Phone_Number[index]}</p></div>
+					<div class="ui-block-e" id="description${index}"><p class="col_d" id="col_d">${Description[index]}</p></div>
+					
+					</a>
+				</li>
+       
+       {{/each}}
+</script>
+
+<div id="pageData"></div>
+
+<script type="text/javascript">
+  
+ 			var oTable = null;
+    		var debuglocal = false;
+    		    
+    		    $('#tableview').TableView($('#contentTemplate'),function()
+	    		{
+	    			oTable = this;
+	    			$(document).ready(function(){ 
+		    			oTable = oTable.init($('div#pageData'),
+			    			function(){
+			    				// call when we have data
+			    				oTable.loadContent();
+			    				
+								$('#contentload').remove();
+								oTable.showPage(1);
+			    			},
+			    			function(oerr){
+			    				// call when we have errors
+			    				$('<li>'+ oerr +'</li>').appendTo('#tableview');
+			    				$('#tableview').listview('refresh');
+			    				$('#contentload').remove();
+			    			});
+		    			
+		    			
+		    				
+							
+      				});  
+	    		});
+	    		
+	    		
+			
+      
+    
+    
+</script>
+
+</body>
+</html>

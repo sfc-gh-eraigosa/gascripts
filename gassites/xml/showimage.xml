@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <Module>
+  
+  <ModulePrefs title="Simple Show Image"
+             description="Very Simply Simple Image with Link."
+             author="Raigosa.com Software Development Independent Contracting Services"
+             author_affiliation=""
+             author_email="xpandesiceng@yahoo.com"
+             screenshot="/ig/modules/none-tbd.png"
+             thumbnail="/ig/modules/none-tbd-thm.png" > 
+<Require feature="idi"/>
+<Require feature="locked-domain" />
+</ModulePrefs>
+<UserPref name="imageurl" display_name="Image URL." 
+          default_value="https://sites.google.com/site/teamdaymakers/home/rss.png" required="true"/> 
+<UserPref name="linkurl" display_name="Link URL." 
+          default_value="https://sites.google.com/site/teamdaymakers/announcements/posts.xml" required="true"/> 
+<UserPref name="alttxt" display_name="Alt Text." 
+          default_value="Subscribe" required="false"/> 
+<UserPref name="showerrors" display_name="Display an error message when there are problems." 
+          datatype="bool" required="false"/>              
+<UserPref name="debug" display_name="Display debug information (any value will do to turn this on)." 
+          datatype="bool" required="false"/>
+<Content type="html">
+<![CDATA[
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<div id="content"></div>
+<div id="error"></div>
+<div id='debug' class="debug"></div> 
+	
+
+<script type="text/javascript">
+	var prefs = new _IG_Prefs(); // User preferences 
+    $(document).ready(function(){  
+			var theobj = $('<a target="_top" href="' + prefs.getString("linkurl") + '"><img border="0" alt="' + prefs.getString("alttxt") + '" src="' + prefs.getString("imageurl")+ '"></a>');
+			
+									
+			theobj.appendTo('div#content');
+			
+	}); 
+	
+</script>
+	
+]]>
+  </Content>
+ </Module>

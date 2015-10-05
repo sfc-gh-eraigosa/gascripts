@@ -15,3 +15,6 @@ dev: init build
 
 push: inti build
 	bin/push gascriptsv2 1.0
+
+hacking:
+	bin/hacking src/main/webapp gascriptsv2 8081

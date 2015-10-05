@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# start an apache server for just hacking on java script so we dont have to rebuild everytime
+# hacking <webroot> <appname> <port>
+echo hacking $1 $2 $3
+WORKSPACE_ROOT="$(git rev-parse --show-toplevel)"
+WEB_ROOT=$1
+APP_NAME=$2
+PORT=$3
+
+if docker ps -a | grep web-${APP_NAME} ; then
+  docker rm -f web-${APP_NAME}
+fi
+
+docker run -d -p $PORT:80 -v ${WORKSPACE_ROOT}/${WEB_ROOT}:/app --name web-${APP_NAME} -d bitnami/apache
+
+docker logs --tail=50 web-${APP_NAME}

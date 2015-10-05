@@ -148,7 +148,7 @@
     <script type="text/javascript">
       var prefs = new gadgets.Prefs();
       function Initialize() {
-         var url = '/gassites/pages/socialfeeds.html?' + 'debug=DEBUGOPT&showerrors=SHOWERRORSOPT' + '&header_html=HEADER_HTML' + '&footer_html=FOOTER_HTML';
+         var url = getProtocol() + '//gascriptsv2.appspot.com' + '/gassites/pages/socialfeeds.html?' + 'debug=DEBUGOPT&showerrors=SHOWERRORSOPT' + '&header_html=HEADER_HTML' + '&footer_html=FOOTER_HTML';
          var iframe = document.getElementById('home');
          url = url.replace(/DEBUGOPT/, '__UP_debug__');
          url = url.replace(/SHOWERRORSOPT/, '__UP_showerrors__');
@@ -156,6 +156,33 @@
          url = url.replace(/FOOTER_HTML/, '__UP_footer_html__');
          iframe.src = url;
 
+        }
+        function getProtocol()
+        {
+          var httpPrefix = "";
+
+        try
+        {
+           if(typeof(document.location.protocol) != 'undefined')
+              httpPrefix = document.location.protocol;
+        }catch(error)
+          {
+             try
+             {
+               if(typeof(parent.location.protocol) != 'undefined')
+                      httpPrefix = parent.location.protocol;
+             }
+             catch(error)
+             {
+              httpPrefix = "";
+             }
+
+           }
+
+
+         httpPrefix = (httpPrefix.indexOf("http") < 0) ? "http:" : httpPrefix; // don't allow anything not expected to be set.
+
+         return httpPrefix;
         }
       gadgets.util.registerOnLoadHandler(Initialize);
     </script>

@@ -13,7 +13,7 @@ build: init
 dev: init build
 	bin/dev gascriptsv2 1.0 '8080'
 
-push: inti build
+push: init build
 	bin/push gascriptsv2 1.0
 
 hacking:

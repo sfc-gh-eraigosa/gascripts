@@ -408,12 +408,12 @@ GoogleSpreadsheet.find = function(params) {
     	if(item.indexOf(params.localStoreKey) >= 0)
 		{
     		itemObject = JSON.parse(localStorage[item]);
-            for (key in params) {
-              value = params[key];
-              if (itemObject[key] === value) {
+            // for (key in params) {
+              // value = params[key];
+              // if (itemObject[key] === value) {
                 return GoogleSpreadsheet.bless(itemObject);
-              }
-            }
+              // }
+            // }
 		}
       }
     }

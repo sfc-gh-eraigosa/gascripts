@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" ?>
     <Module>
-  
+
   <ModulePrefs title="Announcements Rotating Banners"
              description="Display a rotating banner image from a google sites anouncements page."
              author="Raigosa.com Software Development Independent Contracting Services"
              author_affiliation=""
              author_email="xpandesiceng@yahoo.com"
              screenshot="/ig/modules/none-tbd.png"
-             thumbnail="/ig/modules/none-tbd-thm.png" > 
+             thumbnail="/ig/modules/none-tbd-thm.png" >
 <Require feature="idi"/>
 <Require feature="locked-domain" />
 </ModulePrefs>
-<UserPref name="feedURL" display_name="Google feedburner URL (empty values will use default scripted value)." 
+<UserPref name="feedURL" display_name="Google feedburner URL (empty values will use default scripted value)."
           required="false"/>
-<UserPref name="bannerSpeed" display_name="Set the banner sliding speed (micro seconds)." 
+<UserPref name="bannerSpeed" display_name="Set the banner sliding speed (micro seconds)."
           default_value="800" required="false"/>
-<UserPref name="bannerPause" display_name="Set the banner pause time(micro seconds)." 
+<UserPref name="bannerPause" display_name="Set the banner pause time(micro seconds)."
           default_value="6000" required="false"/>
-<UserPref name="feedPerBanner" display_name="Set the number of announcements on each banner." 
-          default_value="3" required="false"/> 
-<UserPref name="feedLimit" display_name="Maximum number of announcements to read from the feed." 
-          default_value="10" required="false"/>   
-<UserPref name="bannerLOffset" display_name="Banner Left Offset." 
-          default_value="0" required="false"/>   
-<UserPref name="bannerHeight" display_name="Banner Height." 
-          default_value="150" required="false"/>   
-<UserPref name="bannerWidth" display_name="Banner Width." 
-          default_value="900" required="false"/> 
-<UserPref name="bannerBackGroundColor" display_name="Banner background color." 
-          default_value="#000000" required="false"/>  
-<UserPref name="bannerFontSize" display_name="Banner font size." 
-          default_value="10pt" required="false"/>    
-<UserPref name="showerrors" display_name="Display an error message when there are problems." 
-          datatype="bool" required="false"/>              
-<UserPref name="debug" display_name="Display debug information (any value will do to turn this on)." 
+<UserPref name="feedPerBanner" display_name="Set the number of announcements on each banner."
+          default_value="3" required="false"/>
+<UserPref name="feedLimit" display_name="Maximum number of announcements to read from the feed."
+          default_value="10" required="false"/>
+<UserPref name="bannerLOffset" display_name="Banner Left Offset."
+          default_value="0" required="false"/>
+<UserPref name="bannerHeight" display_name="Banner Height."
+          default_value="150" required="false"/>
+<UserPref name="bannerWidth" display_name="Banner Width."
+          default_value="900" required="false"/>
+<UserPref name="bannerBackGroundColor" display_name="Banner background color."
+          default_value="#000000" required="false"/>
+<UserPref name="bannerFontSize" display_name="Banner font size."
+          default_value="10pt" required="false"/>
+<UserPref name="showerrors" display_name="Display an error message when there are problems."
+          datatype="bool" required="false"/>
+<UserPref name="debug" display_name="Display debug information (any value will do to turn this on)."
           datatype="bool" required="false"/>
 
   <Content type="html">
   <![CDATA[
-  
+
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script src="http://gascripts.appspot.com/gassites/js/arbanner.js"></script>
-  <script src="http://gascripts.appspot.com/gassites/js/includes/easySlider1.7.js"></script>
-  <script src="http://gascripts.appspot.com/gassites/js/includes/jquery.zrssfeed.js"></script>      
- 
-  <link href="http://gascripts.appspot.com/gassites/css/khf.css" rel="stylesheet" type="text/css" media="screen" />  
+  <script src="//gascriptsv2.appspot.com/assites/js/arbanner.js"></script>
+  <script src="//gascriptsv2.appspot.com/gassites/js/includes/easySlider1.7.js"></script>
+  <script src="//gascriptsv2.appspot.com/gassites/js/includes/jquery.zrssfeed.js"></script>
+
+  <link href="//gascriptsv2.appspot.com/gassites/css/khf.css" rel="stylesheet" type="text/css" media="screen" />
 <div id="slider">
-      <ul>      
+      <ul>
       </ul>
-  </div> 
+  </div>
   <div id="error"></div>
-  <div id='debug' class="debug"></div> 
+  <div id='debug' class="debug"></div>
  <script type="text/javascript">
-  
+
    var debuglocal = false;
-	
-	
-    
-   $(document).ready(function(){ 
-      
+
+
+
+   $(document).ready(function(){
+
    	  $("#slider").loadBanners();
-     
-      
-    });  
-    
-    
-    
+
+
+    });
+
+
+
     </script>
   ]]>
   </Content>

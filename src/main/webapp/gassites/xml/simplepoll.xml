@@ -1,168 +1,168 @@
 <?xml version="1.0" encoding="UTF-8" ?>
  <Module>
-  
+
   <ModulePrefs title="gaScripts Simple Poll using MicroPoll"
              description="Display one of your MicroPoll polls within a google app script."
              author="Raigosa.com Software Development Independent Contracting Services"
              author_affiliation=""
-             author_email="xpandesiceng@yahoo.com" 
-              
+             author_email="xpandesiceng@yahoo.com"
+
              screenshot="/ig/modules/none-tbd.png"
-             thumbnail="/ig/modules/none-tbd-thm.png" height="350" > 
+             thumbnail="/ig/modules/none-tbd-thm.png" height="350" >
            <Require feature="dynamic-height"/>
            <Require feature="setprefs"/>
-          
+
   </ModulePrefs>
-  <UserPref name="apikey" display_name="API Key" 
+  <UserPref name="apikey" display_name="API Key"
           required="false"/>
-  <UserPref name="pollid" display_name="Poll ID" 
+  <UserPref name="pollid" display_name="Poll ID"
           required="false"/>
-  
-  <UserPref name="pollreset" display_name="Vote Reset Time" 
+
+  <UserPref name="pollreset" display_name="Vote Reset Time"
           required="false"/>
-          
-  <UserPref name="pollmultivote" display_name="Allow Multiple Votes" 
-          required="false"/>        
-  
-  <UserPref name="savekey" display_name="Save Key" 
-          datatype="bool" required="false"/>   
-  <UserPref name="showerrors" display_name="Show Errors" 
-          datatype="bool" required="false"/>              
-  <UserPref name="debug" display_name="Debug" 
+
+  <UserPref name="pollmultivote" display_name="Allow Multiple Votes"
+          required="false"/>
+
+  <UserPref name="savekey" display_name="Save Key"
+          datatype="bool" required="false"/>
+  <UserPref name="showerrors" display_name="Show Errors"
+          datatype="bool" required="false"/>
+  <UserPref name="debug" display_name="Debug"
           datatype="bool" required="false"/>
   <Content type="html" view="configuration">
         <![CDATA[
         	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        	<script type="text/javascript" src="https://gascripts.appspot.com/gassites/js/micropollapi.js"></script>
-  			<style type="text/css"> 
-				.config-options { margin: 10px; } 
-				.label { font-weight: bold; width: 35%; vertical-align: top; } 
-				.gray { color:#666666; } 
+        	<script type="text/javascript" src="//gascriptsv2.appspot.com/gassites/js/micropollapi.js"></script>
+  			<style type="text/css">
+				.config-options { margin: 10px; }
+				.label { font-weight: bold; width: 35%; vertical-align: top; }
+				.gray { color:#666666; }
 				html { font-family:arial,sans-serif; font-size:0.81
 			]]>
 			<![CDATA[
-			     em; font-size-adjust:none; font-style:normal; font-variant:normal; font-weight:normal; line-height:1.5; } 
-			     A:link, A:visited, A:active { text-decoration: none } 
-			 </style> 
-			 <table class="config-options"> 
-			 <tr> 	
-				<td align="left" class="label">MicroPoll API Key:</td> 
-					<td align="left"> 
-						<input type="text" id="apikey" onchange="Update()"/> 
+			     em; font-size-adjust:none; font-style:normal; font-variant:normal; font-weight:normal; line-height:1.5; }
+			     A:link, A:visited, A:active { text-decoration: none }
+			 </style>
+			 <table class="config-options">
+			 <tr>
+				<td align="left" class="label">MicroPoll API Key:</td>
+					<td align="left">
+						<input type="text" id="apikey" onchange="Update()"/>
 						<br/> <span class="gray">You can find the API Key for your MicroPoll account by logging into MicroPoll.com and editing any of your polls.  Under "Edit MicroPoll" click on <a target="_new" href="http://www.micropoll.com/a/microPollSetting.do?mode=ApiSetting">API Settings</a>.  Use the value found in the field : Secret API Key.
-						</span> 
-				</td> 
-			 </tr> 
-			 <tr> 	
-				<td align="left" class="label">Save API Key:</td> 
-				<td align="left"> 
+						</span>
+				</td>
+			 </tr>
+			 <tr>
+				<td align="left" class="label">Save API Key:</td>
+				<td align="left">
 						<input type="checkbox" onclick="Update()" id="savekey" /> Please save my API Key, I'm tired of entering it.
 						<br/> <span class="gray">
-						By Selecting this option you are agreeing to store the API key on your goole site gadget prefrences.  This data is available only to you and google.  Although you will transfer the key to this gadget we will not store this key for anything other than to retrieve the polls for the key.</span> 
-				</td> 
-			 </tr> 
-			 <tr> 	
-				<td align="left" class="label">Found Polls:</td> 
-					<td align="left"> 
+						By Selecting this option you are agreeing to store the API key on your goole site gadget prefrences.  This data is available only to you and google.  Although you will transfer the key to this gadget we will not store this key for anything other than to retrieve the polls for the key.</span>
+				</td>
+			 </tr>
+			 <tr>
+				<td align="left" class="label">Found Polls:</td>
+					<td align="left">
 						<div id="allpolls"></div>
-				</td> 
-			 </tr> 
+				</td>
+			 </tr>
 			 <tr><td align="center" colspan="2">
-			 	<HR WIDTH="10%" COLOR="#6699FF" SIZE="6"> 
+			 	<HR WIDTH="10%" COLOR="#6699FF" SIZE="6">
 			 </td>
 			 </tr>
-			 <tr> 	
-				<td align="left" class="label">Poll ID :</td> 
-					<td align="left"> 
-						<input type="text" id="pollid" onchange="Update()"/> 
+			 <tr>
+				<td align="left" class="label">Poll ID :</td>
+					<td align="left">
+						<input type="text" id="pollid" onchange="Update()"/>
 						<br/> <span class="gray">By Selecting this option you are agreeing to store the API key on your goole site gadget prefrences.  This data is available only to you and google.  Although you will transfer the key to this gadget we will not store this key for anything other than to retrieve the polls for the key.</span>
-						
-				</td> 
-			 </tr> 
-			 
+
+				</td>
+			 </tr>
+
 			 <tr><td align="center" colspan="2">
-			 	<HR WIDTH="10%" COLOR="#6699FF" SIZE="6"> 
+			 	<HR WIDTH="10%" COLOR="#6699FF" SIZE="6">
 			 </td>
 			 </tr>
-			  <tr> 	
-				<td align="left" class="label">Vote Reset Time (minutes):</td> 
-				<td align="left"> 
-						<input type="text" id="pollreset" onchange="Update()"/>  
+			  <tr>
+				<td align="left" class="label">Vote Reset Time (minutes):</td>
+				<td align="left">
+						<input type="text" id="pollreset" onchange="Update()"/>
 						<br/> <span class="gray">Use this option to set a reset time for when you can vote again.  The time in minutes can be set so that votes can be cast again after the user votes after this time.  <br/>
 						<br/>After the poll time resets, they can vote again.
-						</span> 
-				</td> 
-			 </tr> 
-			 <tr> 
-			 	<td align="left" class="label">Trouble Shooting:</td> 
-			 	<td align="left"> 
-					 <table> 
+						</span>
+				</td>
+			 </tr>
+			 <tr>
+			 	<td align="left" class="label">Trouble Shooting:</td>
+			 	<td align="left">
+					 <table>
 					 <tbody>
-					 	<tr> <td><input type="checkbox" onclick="Update()" id="debug" /> Turn on Debug</td> 
-					 	     <td><input type="checkbox" onclick="Update()" id="showerrors" /> Show Errors</td> 
+					 	<tr> <td><input type="checkbox" onclick="Update()" id="debug" /> Turn on Debug</td>
+					 	     <td><input type="checkbox" onclick="Update()" id="showerrors" /> Show Errors</td>
 					 	</tr>
-					 	
-			 	     </tbody> 
-			 	     </table> 
-			 	 </td> </tr> 
-			
-			
-			</table> 
+
+			 	     </tbody>
+			 	     </table>
+			 	 </td> </tr>
+
+
+			</table>
 			<div id="error"></div>
-			<script type="text/javascript"> 
-				var prefs = new gadgets.Prefs(); 
+			<script type="text/javascript">
+				var prefs = new gadgets.Prefs();
 				function updatePolls( key, pollid)
 				{
-				     $('#allpolls').append('<span id="spinner">' + '<img src="' + getProtocol() + '//gascripts.appspot.com/gassites/images/spinner.gif" />' + ' Please wait....</span>');
-				     
+				     $('#allpolls').append('<span id="spinner">' + '<img src="' + getProtocol() + '//gascriptsv2.appspot.com/gassites/images/spinner.gif" />' + ' Please wait....</span>');
+
 				     $('#allpolls').getPolls(key, pollid, function()
 				     {
 				    	$(this.container).empty();
-				     	
+
 				     	$(this.container).append(this.result);
-				     		
+
 				     	// update the poll id pollids
 				     	if(this.status == 200)
 				     	{
 				     		var pollid = null;
 						     $("select#pollids option:selected").each(function () {
 					                pollid = $(this).val() ;
-					                
+
 					          });
-					          if (pollid != null && pollid.length > 0) { document.getElementById('pollid').value = pollid; prefs.set('pollid', pollid); } 
+					          if (pollid != null && pollid.length > 0) { document.getElementById('pollid').value = pollid; prefs.set('pollid', pollid); }
 					     }
-					     
+
 				     });
-				     
-				     
+
+
 				}
 				function UpdateSelect()
 				{
 					var pollid = null;
 				     $("select#pollids option:selected").each(function () {
 			                pollid = $(this).val() ;
-			                
+
 			          });
-			          if (pollid != null && pollid.length > 0) { document.getElementById('pollid').value = pollid; prefs.set('pollid', pollid); } 
+			          if (pollid != null && pollid.length > 0) { document.getElementById('pollid').value = pollid; prefs.set('pollid', pollid); }
 				}
-				function Update() { 
+				function Update() {
 						 var apikey = document.getElementById('apikey').value;
 						 var pollid = document.getElementById('pollid').value;
 						 var pollreset =  document.getElementById('pollreset').value;
 						 if(apikey != '')
 						 {
 						 	updatePolls(apikey, pollid);
-						 	
+
 						 }else
 						 {
 						     $('#allpolls').empty();
 						 }
-						  
-						
+
+
 						 var savekey  = $('#' + 'savekey').is(":checked") ? 'on' : 'off';
 						 var debug = $('#' + 'debug').is(":checked") ? 'on' : 'off';
 						 var showerrors =  $('#' + 'showerrors').is(":checked") ? 'on' : 'off';
-						 
+
 						 if(pollreset != '')
 						 {
 						 	try{
@@ -174,55 +174,55 @@
 						 	}
 						 	prefs.set('pollreset', pollreset);
 						 }
-						 
+
 						 $("div#error").empty().hide();
 						 $("div#error").css('border','0px');
-						 
-						 
-						 prefs.set('savekey', savekey); 
+
+
+						 prefs.set('savekey', savekey);
 						 if(savekey == 'on')
 						    prefs.set('apikey', apikey);
-						 prefs.set('debug', debug); 
-						 prefs.set('showerrors', showerrors); 
-						 prefs.set('pollid', pollid); 
-						
-						 gadgets.window.adjustHeight(); 
-					}; 
-				
-				function Initialize() { 
-					
-					var pollid = '__UP_pollid__'; 
-					if (pollid.length > 0) { document.getElementById('pollid').value = pollid; } 
-					
-					var pollreset = '__UP_pollreset__'; 
-					if (pollreset.length > 0) { document.getElementById('pollreset').value = pollreset; } 
-					
-					var savekey = '__UP_savekey__'; 
+						 prefs.set('debug', debug);
+						 prefs.set('showerrors', showerrors);
+						 prefs.set('pollid', pollid);
+
+						 gadgets.window.adjustHeight();
+					};
+
+				function Initialize() {
+
+					var pollid = '__UP_pollid__';
+					if (pollid.length > 0) { document.getElementById('pollid').value = pollid; }
+
+					var pollreset = '__UP_pollreset__';
+					if (pollreset.length > 0) { document.getElementById('pollreset').value = pollreset; }
+
+					var savekey = '__UP_savekey__';
 					console.log('save key' + savekey);
 					console.log('__UP_savekey__');
-					if (savekey.length > 0) { document.getElementById('savekey').value = savekey; } 
-					
-					var debug = '__UP_debug__'; 
-					if (debug.length > 0) { document.getElementById('debug').value = debug; } 
-					
-					var showerrors = '__UP_showerrors__'; 
-					if (showerrors.length > 0) { document.getElementById('showerrors').value = showerrors; } 
-					
+					if (savekey.length > 0) { document.getElementById('savekey').value = savekey; }
+
+					var debug = '__UP_debug__';
+					if (debug.length > 0) { document.getElementById('debug').value = debug; }
+
+					var showerrors = '__UP_showerrors__';
+					if (showerrors.length > 0) { document.getElementById('showerrors').value = showerrors; }
+
 					if(typeof(savekey) != 'undefined' && savekey.toLowerCase() == 'on')
 					{
-						var apikey = '__UP_apikey__'; 
+						var apikey = '__UP_apikey__';
 						console.log('api key' + apikey);
 						console.log('__UP_apikey__');
-						if (apikey.length > 0) { document.getElementById('apikey').value = apikey; } 
+						if (apikey.length > 0) { document.getElementById('apikey').value = apikey; }
 					}
-					
+
 					$('#savekey').prop('checked', (prefs.getString("savekey").toLowerCase() == 'on'));
 					$('#debug').prop('checked', (prefs.getString("debug").toLowerCase() == 'on'));
 					$('#showerrors').prop('checked', (prefs.getString("showerrors").toLowerCase() == 'on'));
-					
+
 					console.log('call update()');
-					Update(); 
-				} 
+					Update();
+				}
 				function logerror(msg)
 			    {
 			          var cssErrorObj = {
@@ -237,7 +237,7 @@
 						      'background-position' : '10px center',
 						      'text-align' : 'left'
 						    };
-			    
+
 			          msg =  msg + "<BR>";
 			          $("div#error").css(cssErrorObj);
 			          $("div#error").append(msg);
@@ -253,85 +253,85 @@
 			      function getProtocol()
 			      {
 			    	 var httpPrefix = "";
-	 
+
 					  try
 					  {
 				    	 if(typeof(document.location.protocol) != 'undefined')
-				    	 		httpPrefix = document.location.protocol; 
+				    	 		httpPrefix = document.location.protocol;
 					  }catch(error)
 				      {
 					    	 try
 					    	 {
 						    	 if(typeof(parent.location.protocol) != 'undefined')
-							    	    	httpPrefix = parent.location.protocol; 
+							    	    	httpPrefix = parent.location.protocol;
 					    	 }
 					    	 catch(error)
 					    	 {
 					    	 	httpPrefix = "";
 					    	 }
-					    	 
+
 				       }
-					 
-					 		
+
+
 					   httpPrefix = (httpPrefix.indexOf("http") < 0) ? "http:" : httpPrefix; // don't allow anything not expected to be set.
-					    
+
 					   return httpPrefix;
 			      }
 				gadgets.util.registerOnLoadHandler(Initialize);
 			</script>
 			]]>
   </Content>
-  
+
   <Content type="html" view="home">
 			<![CDATA[
 			<iframe id="home" frameborder="0" marginwidth="0" marginheight="0" border="0" style="border:0;margin:0;width:100%;height:100%;" scrolling="no" allowtransparency="true">
-			</iframe> 
-			<script type="text/javascript"> 
-				var prefs = new gadgets.Prefs(); 
+			</iframe>
+			<script type="text/javascript">
+				var prefs = new gadgets.Prefs();
 				function Initialize() {
-				     
-					 var url = getProtocol() + '//gascripts.appspot.com/gassites/pages/simplepoll.html?rsz=large&' + 'debug=DEBUGOPT&showerrors=SHOWERRORSOPT&pollid=POLLIDOPT&pollreset=POLLRESET'; 
-					 var iframe = document.getElementById('home'); 
-					 url = url.replace(/DEBUGOPT/, '__UP_debug__'); 
-					 url = url.replace(/POLLRESET/, '__UP_pollreset__'); 
-					 url = url.replace(/SHOWERRORSOPT/, '__UP_showerrors__'); 
-					 url = url.replace(/POLLIDOPT/, '__UP_pollid__'); 
+
+					 var url = getProtocol() + '//gascripts.appspot.com/gassites/pages/simplepoll.html?rsz=large&' + 'debug=DEBUGOPT&showerrors=SHOWERRORSOPT&pollid=POLLIDOPT&pollreset=POLLRESET';
+					 var iframe = document.getElementById('home');
+					 url = url.replace(/DEBUGOPT/, '__UP_debug__');
+					 url = url.replace(/POLLRESET/, '__UP_pollreset__');
+					 url = url.replace(/SHOWERRORSOPT/, '__UP_showerrors__');
+					 url = url.replace(/POLLIDOPT/, '__UP_pollid__');
 					 iframe.src = url;
-					 
-					} 
+
+					}
 					/*
 			       * get http protocol to use
 			       */
 			      function getProtocol()
 			      {
 			    	 var httpPrefix = "";
-	 
+
 					  try
 					  {
 				    	 if(typeof(document.location.protocol) != 'undefined')
-				    	 		httpPrefix = document.location.protocol; 
+				    	 		httpPrefix = document.location.protocol;
 					  }catch(error)
 				      {
 					    	 try
 					    	 {
 						    	 if(typeof(parent.location.protocol) != 'undefined')
-							    	    	httpPrefix = parent.location.protocol; 
+							    	    	httpPrefix = parent.location.protocol;
 					    	 }
 					    	 catch(error)
 					    	 {
 					    	 	httpPrefix = "";
 					    	 }
-					    	 
+
 				       }
-					 
-					 		
+
+
 					   httpPrefix = (httpPrefix.indexOf("http") < 0) ? "http:" : httpPrefix; // don't allow anything not expected to be set.
-					    
+
 					   return httpPrefix;
 			      }
-				gadgets.util.registerOnLoadHandler(Initialize); 
+				gadgets.util.registerOnLoadHandler(Initialize);
 			</script>
 			]]>
 	</Content>
-  
+
 </Module>

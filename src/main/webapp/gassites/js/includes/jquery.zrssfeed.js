@@ -1,12 +1,12 @@
 /**
  * Plugin: jquery.zRSSFeed
- * 
+ *
  * Version: 1.1.4
  * (c) Copyright 2010-2011, Zazar Ltd
- * 
+ *
  * Description: jQuery plugin for display of RSS feeds via Google Feed API
  *              (Based on original plugin jGFeed by jQuery HowTo. Filesize function by Cary Dunn.)
- * 
+ *
  * History:
  * 1.1.4 - Added option to hide media and now compressed with Google Closure
  * 1.1.3 - Check for valid published date
@@ -21,8 +21,8 @@
 
 (function($){
 
-	$.fn.rssfeed = function(url, options, fn) {	
-	
+	$.fn.rssfeed = function(url, options, fn) {
+
 		// Set pluign defaults
 		var defaults = {
 			limit: 10,
@@ -38,9 +38,9 @@
 			ssl: false,
 			linktarget: '_self',
 			contenttag: 'contentfeed'
-		};  
-		var options = $.extend(defaults, options); 
-		
+		};
+		var options = $.extend(defaults, options);
+
 		// Functions
 		return this.each(function(i, e) {
 			var $e = $(e);
@@ -48,30 +48,33 @@
 
 			// Check for SSL protocol
 			if (options.ssl) s = 's';
-			
+
 			// Add feed class to user div
 			if (!$e.hasClass('rssFeed')) $e.addClass('rssFeed');
-			
+
 			// Check for valid url
 			if(url == null) return false;
-			
+
 			// Create Google Feed API address
-			var api = "http"+ s +"://ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=?&q=" + encodeURIComponent(url);
-			if (options.limit != null) api += "&num=" + options.limit;
-			if (options.key != null) api += "&key=" + options.key;
-			api += "&output=json_xml"
+			// var api = "http"+ s +"://ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=?&q=" + encodeURIComponent(url);
+			// Google retired so lets try to use rss2json api
+			// https://rss2json.com/#rss_url=https%3A%2F%2Fsites.google.com%2Fsite%2Fthekyronhormanfoundation%2Fmissing-children---banners%2Fposts.xml
+			var api = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(url);
+			// count requires a key, so lets leave it off for now
+			// if (options.limit != null) api += "&count=" + options.limit;
+			// not sure what to use here .... maybe api_key if (options.key != null) api += "&key=" + options.key;
 
 			// Send request
 			$.getJSON(api, function(data){
-				
-				// Check for error
-				if (data.responseStatus == 200) {
-	
-					// Process the feeds
-					_process(e, data.responseData, options);
 
-					
-					
+				// Check for error
+				if (data.status == "ok") {
+
+					// Process the feeds
+					_process(e, data, options);
+
+
+
 				} else {
 
 					// Handle error if required
@@ -79,72 +82,73 @@
 						if (options.errormsg != '') {
 							var msg = options.errormsg;
 						} else {
-							var msg = data.responseDetails;
+							var msg = data;
 						};
 						$(e).html('<div class="rssError"><p>'+ msg +'</p></div>');
 				};
 				// Optional user callback function
 					if ($.isFunction(fn)) fn.call(this,$e);
-			});				
+			});
 		});
 	};
-	
+
 	// Function to create HTML result
 	var _process = function(e, data, options) {
 
 		// Get JSON feed data
 		var feeds = data.feed;
+		var items = data.items;
 		if (!feeds) {
 			return false;
 		}
-		var html = '';	
+		var html = '';
 		var row = 'odd';
-		
+
 		// Get XML data for media (parseXML not used as requires 1.5+)
 		if (options.media) {
 			var xml = getXMLDocument(data.xmlString);
 			var xmlEntries = xml.getElementsByTagName('item');
 		}
-		
+
 		// Add header if required
 		if (options.header)
 			html +=	'<div class="rssHeader">' +
 				'<a href="'+feeds.link+'" title="'+ feeds.description +'">'+ feeds.title +'</a>' +
 				'</div>';
-			
+
 		// Add body
 		html += '<div class="rssBody">' +
 			'<ul>';
-		
+
 		// Add feeds
-		for (var i=0; i<feeds.entries.length; i++) {
-			
+		for (var i=0; i<items.length; i++) {
+
 			// Get individual feed
-			var entry = feeds.entries[i];
+			var entry = items[i];
 			var pubDate;
 
 			// Format published date
-			if (entry.publishedDate) {
-				var entryDate = new Date(entry.publishedDate);
+			if (entry.pubDate) {
+				var entryDate = new Date(entry.pubDate);
 				var pubDate = entryDate.toLocaleDateString() + ' ' + entryDate.toLocaleTimeString();
 			}
-			
+
 			// Add feed row
-			html += '<li class="rssRow '+row+'">' + 
+			html += '<li class="rssRow '+row+'">' +
 				'<'+ options.titletag +'><a href="'+ entry.link +'" title="View this feed at '+ feeds.title +'" target="'+ options.linktarget +'">'+ entry.title +'</a></'+ options.titletag +'>'
 			if (options.date && pubDate) html += '<div>'+ pubDate +'</div>'
 			if (options.content) {
-			
+
 				// Use feed snippet if available and optioned
-				if (options.snippet && entry.contentSnippet != '') {
-					var content = entry.contentSnippet;
+				if (options.snippet && entry.description != '') {
+					var content = entry.description;
 				} else {
 					var content = entry.content;
 				}
-				
+
 				html += '<p id="'+ options.contenttag + '">'+ content +'</p>'
 			}
-			
+
 			// Add any media
 			if (options.media && xmlEntries.length > 0) {
 				var xmlMedia = xmlEntries[i].getElementsByTagName('enclosure');
@@ -160,21 +164,21 @@
 				}
 				html += '</li>';
 			}
-			
+
 			// Alternate row classes
 			if (row == 'odd') {
 				row = 'even';
 			} else {
 				row = 'odd';
-			}			
+			}
 		}
-		
+
 		html += '</ul>' +
 			'</div>'
-		
+
 		$(e).html(html);
 	};
-	
+
 	function formatFilesize(bytes) {
 		var s = ['bytes', 'kb', 'MB', 'GB', 'TB', 'PB'];
 		var e = Math.floor(Math.log(bytes)/Math.log(1024));

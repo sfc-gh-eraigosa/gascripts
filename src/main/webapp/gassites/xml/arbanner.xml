@@ -39,8 +39,8 @@
   <Content type="html">
   <![CDATA[
 
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script src="//gascriptsv2.appspot.com/assites/js/arbanner.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="//gascriptsv2.appspot.com/gassites/js/arbanner.js"></script>
   <script src="//gascriptsv2.appspot.com/gassites/js/includes/easySlider1.7.js"></script>
   <script src="//gascriptsv2.appspot.com/gassites/js/includes/jquery.zrssfeed.js"></script>
 

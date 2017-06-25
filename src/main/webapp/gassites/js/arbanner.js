@@ -17,7 +17,7 @@
  *       arbanner embeds this in google gadgets technology to provide sites developers access to add to their site.
  *       View demo here: https://sites.google.com/site/xpandesiceng/home/arbanner
  *       Installation of said gadgets can be purchased as a service by contacting xpandesiceng@yahoo.com.
- *    
+ *
  *
  */
 
@@ -123,18 +123,22 @@
     		  var objLI = null;
     		  var objDIV = $('<div>').addClass('bannercontent');
 
-    		  $($(this).context.nextSibling.innerHTML).appendTo(objDIV);
+          if ( $(this).context.innerHTML != null )
+          {
+            $($(this).context.innerHTML).appendTo(objDIV);
+          }
+// stopped working    		  $($(this).context.nextSibling.innerHTML).appendTo(objDIV);
 
-    		  if(divcount == 1)
-    		  {
+          if(divcount == 1)
+          {
 
-    		      // append to a new LI
-    		      if(lastObjLI != null)
-    		      	objLI = lastObjLI;
-    		      else
-    		      	objLI = $('<li>').addClass('bannerbody');
+              // append to a new LI
+              if(lastObjLI != null)
+                objLI = lastObjLI;
+              else
+                objLI = $('<li>').addClass('bannerbody');
 
-    		      $(objDIV).appendTo(objLI);
+              $(objDIV).appendTo(objLI);
 
     		      // and append the LI to slider
     		      $(objLI).appendTo('div#slider ul');
@@ -153,7 +157,7 @@
     		       divcount--;
     		  }
 
-    		  logger(index + ': ' + '<li>'+$(this).context.nextSibling.innerHTML+'</li>');
+    		  logger(index + ': ' + '<li>'+$(this).context.innerHTML+'</li>');
 	      });
 
 	      if(lastObjLI != null)

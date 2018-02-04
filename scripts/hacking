@@ -12,6 +12,18 @@ if docker ps -a | grep web-${APP_NAME} ; then
   docker rm -f web-${APP_NAME}
 fi
 
-docker run -d -p $PORT:80 -v ${WORKSPACE_ROOT}/${WEB_ROOT}:/app --name web-${APP_NAME} -d bitnami/apache
+cid=$(docker run -d \
+                  -p $PORT:80 \
+                  -v ${WORKSPACE_ROOT}/${WEB_ROOT}:/app \
+                  --name web-${APP_NAME} -d bitnami/apache)
 
-docker logs --tail=50 web-${APP_NAME}
+function cleanup() {
+  echo "Shutting down server"
+  docker rm -f $cid
+  exit 0
+}
+
+trap cleanup EXIT
+
+docker logs -f $cid
+exit 0

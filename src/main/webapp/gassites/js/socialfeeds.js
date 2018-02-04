@@ -29,13 +29,11 @@
     try
     {
       prefs = loadGadgetPrefs();
-      $('div#fb-page').prop('data-href',prefs.socialfeedurl)
-      $('blockquote#fb-cite').prop('cite',prefs.socialfeedurl)
-      $('a#fb-href').prop('href',prefs.socialfeedurl)
-      $('div#fb-page').prop('data-height',prefs.innerheight)
-      $('div#fb-page').prop('data-width',prefs.innerwidth)
-      $('div#header_html').append(prefs.headerhtml);
-      $('div#footer_html').append(prefs.footerhtml);
+      $('div#headerhtml').append(prefs.headerhtml);
+      $('div#fb-root').append(createInnerDiv( prefs.socialfeedurl,
+                                              prefs.innerwidth,
+                                              prefs.innerheight));
+      $('div#footerhtml').append(prefs.footerhtml);
 
       logger("debug : "         + prefs.debug);
       logger("socialfeedurl : " + prefs.socialfeedurl);
@@ -60,6 +58,28 @@
           console.log(msg)
         }
       }
+
+      // createInnerDiv
+      // <div id="fb-page" name="fb-page" class="fb-page" data-href="https://www.facebook.com/facebook" data-height="600" data-width="500" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false" data-show-posts="true">
+      //   <div class="fb-xfbml-parse-ignore">
+      //     <blockquote id="fb-cite" name="fb-cite" cite="https://www.facebook.com/facebook">
+      //       <a id="fb-href" name="fb-href" href="https://www.facebook.com/facebook">Social Media Feed</a>
+      //     </blockquote>
+      //   </div>
+      // </div>
+      function createInnerDiv(url, innerwidth, innerheight)
+      {
+        var elementStr = '' +
+            '<div id="fb-page" name="fb-page" class="fb-page" data-href="' + url + '"' +
+            '                  data-height="' + innerheight + '" data-width="' + innerwidth + '" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false" data-show-posts="true">' +
+            '  <div class="fb-xfbml-parse-ignore">' +
+            '    <blockquote id="fb-cite" name="fb-cite" cite="' + url + '">' +
+            '      <a id="fb-href" name="fb-href" href="' + url + '">Social Media Feed</a>' +
+            '    </blockquote>' +
+            '</div>';
+        return $(elementStr);
+      }
+
       /*
       * logerror(msg)
       */

@@ -1,20 +1,18 @@
-.PHONY: all build init push
+.PHONY: all bootstrap build server push
 
-machine_ip=`docker-machine ip dev`
+all:  bootstrap build push
 
-all: init build push
+bootstrap:
+	scripts/bootstrap
 
-init:
-	bin/init
+build: bootstrap
+	scripts/build
 
-build: init
-	bin/build
+server: bootstrap build
+	scripts/server gascriptsv2 1.0 '8080'
 
-dev: init build
-	bin/dev gascriptsv2 1.0 '8080'
-
-push: init build
-	bin/push gascriptsv2 1.0
+push: bootstrap build
+	scripts/push gascriptsv2 1.0
 
 hacking:
-	bin/hacking src/main/webapp gascriptsv2 8081
+	scripts/hacking src/main/webapp gascriptsv2 8081

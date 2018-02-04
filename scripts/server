@@ -11,12 +11,22 @@ PORT=$3
 if docker ps -a | grep ${APP_NAME} ; then
   docker rm -f ${APP_NAME}
 fi
-docker run \
+cid=$(docker run \
   -p $PORT:8080 \
   -d \
   -v "$(git rev-parse --show-toplevel)":/apps/workspace \
   --name $APP_NAME \
   appengine \
-  bash -c "dev_appserver.sh --address=0.0.0.0 --port=8080 /apps/workspace/target/${APP_NAME}-${API_VERSION}"
+  bash -c "dev_appserver.sh --address=0.0.0.0 --port=8080 /apps/workspace/target/${APP_NAME}-${API_VERSION}")
 
-docker logs --tail=50 ${APP_NAME}
+function cleanup() {
+  echo "Shutting down server"
+  docker stop $cid
+  docker rm $cid
+  exit 0
+}
+
+trap cleanup EXIT
+
+docker logs -f $cid
+exit 0

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+docker run -it \
+  --rm \
+  -v "$(git rev-parse --show-toplevel)":/apps/workspace \
+  appengine bash -c "cd /apps/workspace && mvn clean install"

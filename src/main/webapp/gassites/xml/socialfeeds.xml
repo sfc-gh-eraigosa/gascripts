@@ -8,6 +8,7 @@
              author_email="craigosa@gmail.com"
              screenshot="/ig/modules/none-tbd.png"
              thumbnail="/ig/modules/none-tbd-thm.png" >
+<Require feature="setprefs" />
 <Require feature="idi"/>
 <Require feature="locked-domain" />
 </ModulePrefs>

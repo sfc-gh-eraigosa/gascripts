@@ -42,7 +42,7 @@
                  <tr>
                    <td align="left" class="label" valign="top">Social Media URL (required):</td>
                      <td align="left">
-                       <textarea name="socialfeedurl" id="socialfeedurl" cols="90" rows="1"></textarea>
+                       <textarea name="socialfeedurl" id="socialfeedurl" onchange="Update()" cols="90" rows="1"></textarea>
                        <div style="background-color:LightGray;">
                        <span>Example: https://www.facebook.com/eichptc</span>
                        <p style="background-color:Gray;color:white;">This url of the page to show.</p>
@@ -52,7 +52,7 @@
                   <tr>
                    <td align="left" class="label" valign="top">Header html:</td>
                      <td align="left">
-                       <textarea name="headerhtml" id="headerhtml" cols="90" rows="8"></textarea>
+                       <textarea name="headerhtml" id="headerhtml" onchange="Update()" cols="90" rows="8"></textarea>
                        <div style="background-color:LightGray;">
                        <span>Example: Test Title</span>
                        <p style="background-color:Gray;color:white;">This value should include header html.</p>
@@ -62,7 +62,7 @@
                  <tr>
                    <td align="left" class="label" valign="top">Footer html:</td>
                      <td align="left">
-                       <textarea name="footerhtml" id="footerhtml" cols="90" rows="8"></textarea>
+                       <textarea name="footerhtml" id="footerhtml" onchange="Update()" cols="90" rows="8"></textarea>
                        <div style="background-color:LightGray;">
                        <span>Example: Test Footer</span>
                        <p style="background-color:Gray;color:white;">This value should include footer html.</p>
@@ -112,6 +112,7 @@
                   var footer_html = document.getElementById('footerhtml').value;
                   // social_feed_url
                   var social_feed_url = document.getElementById('socialfeedurl').value;
+                  logerror('social_feed_url => ' + social_feed_url)
                   // inner_width
                   var inner_width = document.getElementById('innerwidth').value;
                   if (!isNumeric(inner_width)) {

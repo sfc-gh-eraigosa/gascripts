@@ -2,11 +2,11 @@
 
 # start a local web server with appengine war file
 # dev <app name> <api version> <port>
-echo dev $1 $2 $3
 WORKSPACE_ROOT="$(git rev-parse --show-toplevel)"
-APP_NAME=$1
-API_VERSION=$2
-PORT=$3
+APP_NAME="${1:-gascriptsv2}"
+API_VERSION="${2:-1.0}"
+PORT="${3:-9080}"
+echo dev ${APP_NAME} ${API_VERSION} ${PORT}
 
 if docker ps -a | grep ${APP_NAME} ; then
   docker rm -f ${APP_NAME}

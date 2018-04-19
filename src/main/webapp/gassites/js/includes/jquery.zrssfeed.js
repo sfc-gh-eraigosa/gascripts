@@ -59,7 +59,9 @@
 			// var api = "http"+ s +"://ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=?&q=" + encodeURIComponent(url);
 			// Google retired so lets try to use rss2json api
 			// https://rss2json.com/#rss_url=https%3A%2F%2Fsites.google.com%2Fsite%2Fthekyronhormanfoundation%2Fmissing-children---banners%2Fposts.xml
-			var api = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(url);
+      // No longer working, so lets build our own
+			// var api = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(url);
+      var api = "http://gascriptsv2.appspot.com/rss2json?rss_url=" + encodeURIComponent(url);
 			// count requires a key, so lets leave it off for now
 			// if (options.limit != null) api += "&count=" + options.limit;
 			// not sure what to use here .... maybe api_key if (options.key != null) api += "&key=" + options.key;

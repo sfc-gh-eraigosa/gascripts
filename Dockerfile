@@ -1,7 +1,7 @@
-FROM java:7-jdk
+FROM java:8-jdk
 
 ENV MAVEN_VERSION 3.5.2
-ENV APPENGINE_JAVA_SDK 1.9.27
+ENV APPENGINE_JAVA_SDK 1.9.63
 ENV PATH $PATH:/opt/appengine-java-sdk-${APPENGINE_JAVA_SDK}/bin/:/opt/apache-maven-${MAVEN_VERSION}/bin/
 
 RUN apt-get update

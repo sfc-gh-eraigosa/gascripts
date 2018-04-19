@@ -4,7 +4,6 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
-  <!--
     <servlet>
         <servlet-name>helloworld</servlet-name>
         <servlet-class>com.khf.gascripts.HelloWorld</servlet-class>
@@ -13,7 +12,14 @@
         <servlet-name>helloworld</servlet-name>
         <url-pattern>/helloworld</url-pattern>
     </servlet-mapping>
-  -->
+    <servlet>
+        <servlet-name>rss2json</servlet-name>
+        <servlet-class>com.khf.gascripts.Rss2Json</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rss2json</servlet-name>
+        <url-pattern>/rss2json</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

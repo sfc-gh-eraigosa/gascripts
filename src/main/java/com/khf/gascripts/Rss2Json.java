@@ -35,6 +35,7 @@ public class Rss2Json extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     try {
+      System.setProperty("java.net.preferIPv4Stack", "true");
       resp.setContentType("text/json");
       String rss_url = new String(req.getParameter("rss_url").toString().getBytes("UTF-8"),"ASCII");
       // String xml = getText("https://sites.google.com/site/thekyronhormanfoundation/missing-children---banners/posts.xml");

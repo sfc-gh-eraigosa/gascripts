@@ -41,6 +41,9 @@ public class Rss2Json extends HttpServlet {
       String xml = getText(rss_url);
       JSONObject jObject = XML.toJSONObject(xml);
       String json = jObject.toString();
+      resp.setHeader("Access-Control-Allow-Origin", "*");
+      resp.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");
+      resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
       resp.getWriter().println(json);
     } catch (Exception e) {
       throw new IOException(e);

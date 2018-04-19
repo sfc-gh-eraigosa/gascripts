@@ -4,7 +4,7 @@
 # dev <app name> <api version> <port>
 WORKSPACE_ROOT="$(git rev-parse --show-toplevel)"
 APP_NAME="${1:-gascriptsv2}"
-API_VERSION="${2:-1.0}"
+API_VERSION="${2:-1.1}"
 PORT="${3:-9080}"
 echo dev ${APP_NAME} ${API_VERSION} ${PORT}
 

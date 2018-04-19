@@ -9,10 +9,10 @@ build: bootstrap
 	scripts/build
 
 server: bootstrap build
-	scripts/server gascriptsv2 1.0 '9080'
+	scripts/server gascriptsv2 1.1 '9080'
 
 push: bootstrap build
-	scripts/push gascriptsv2 1.0
+	scripts/push gascriptsv2 1.1
 
 hacking:
 	scripts/hacking src/main/webapp gascriptsv2 9081
